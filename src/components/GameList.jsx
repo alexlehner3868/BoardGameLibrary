@@ -14,7 +14,6 @@ const GameCard = ({ game }) => (
 export default function GameList({ games }) {
   return (
     <div>
-      <h2>Game Library</h2>
       {games.length === 0 ? (
         <p>No games added yet.</p>
       ) : (

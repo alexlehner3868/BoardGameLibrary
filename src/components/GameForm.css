@@ -1,0 +1,16 @@
+/* src/components/GameForm.css */
+
+select[multiple] {
+    width: 100%;
+    height: 150px; /* Height for the dropdown to show multiple options */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  option {
+    padding: 5px;
+  }
+  

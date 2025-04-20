@@ -4,7 +4,6 @@ import React from "react";
 export default function GameForm({ formData, onChange, onSubmit, error }) {
   return (
     <div>
-      <h2>Add a New Game</h2>
       <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         <input
           name="title"
