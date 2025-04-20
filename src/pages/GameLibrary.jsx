@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import GameList from "../components/GameList";
 import GameForm from "../components/GameForm";
+import "./GameLibrary.css";
 
 export default function GameLibrary() {
-  // Load games from localStorage or use an empty array if not found
   const [games, setGames] = useState(() => {
     const savedGames = localStorage.getItem("boardGames");
     return savedGames ? JSON.parse(savedGames) : [];
@@ -21,7 +21,6 @@ export default function GameLibrary() {
 
   const [error, setError] = useState("");
 
-  // Update localStorage whenever games list changes
   useEffect(() => {
     localStorage.setItem("boardGames", JSON.stringify(games));
   }, [games]);
@@ -53,20 +52,29 @@ export default function GameLibrary() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
-      setGames((prev) => [...prev, formData]); // Add the new game to the list
-      setFormData({ title: "", minPlayers: "", maxPlayers: "", duration: "", category: "", rating: "" }); // Reset the form
+      const newGame = { ...formData };
+      setGames([...games, newGame]);
+      setFormData({ title: "", minPlayers: "", maxPlayers: "", duration: "", category: "", rating: "" });
     }
   };
 
   return (
-    <div style={{ display: "flex", padding: "2rem" }}>
-      <div style={{ flex: 2, paddingRight: "2rem" }}>
+    <div className="game-library-container">
+      <div className="game-list">
+        <h2>Game Library</h2>
         <GameList games={games} />
       </div>
-      <div style={{ flex: 1, borderLeft: "1px solid #ddd", paddingLeft: "2rem" }}>
-        <GameForm formData={formData} onChange={handleChange} onSubmit={handleSubmit} error={error} />
+
+      <div className="game-form">
+        <h2>Add New Game</h2>
+        <GameForm
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          error={error}
+        />
       </div>
     </div>
   );
