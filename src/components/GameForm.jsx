@@ -4,18 +4,21 @@ import React from "react";
 export default function GameForm({ formData, onChange, onSubmit, error }) {
   return (
     <div>
-      <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <form
+        onSubmit={onSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+      >
         <input
           name="title"
           value={formData.title}
-          onChange={onChange}
+          onChange={onChange} // onChange should be passed correctly
           placeholder="Title"
           required
         />
         <input
           name="minPlayers"
           value={formData.minPlayers}
-          onChange={onChange}
+          onChange={onChange} // onChange should be passed correctly
           placeholder="Min Players"
           type="number"
           required
@@ -23,7 +26,7 @@ export default function GameForm({ formData, onChange, onSubmit, error }) {
         <input
           name="maxPlayers"
           value={formData.maxPlayers}
-          onChange={onChange}
+          onChange={onChange} // onChange should be passed correctly
           placeholder="Max Players"
           type="number"
           required
@@ -31,7 +34,7 @@ export default function GameForm({ formData, onChange, onSubmit, error }) {
         <input
           name="duration"
           value={formData.duration}
-          onChange={onChange}
+          onChange={onChange} // onChange should be passed correctly
           placeholder="Duration (min)"
           type="number"
           required
@@ -39,14 +42,14 @@ export default function GameForm({ formData, onChange, onSubmit, error }) {
         <input
           name="category"
           value={formData.category}
-          onChange={onChange}
+          onChange={onChange} // onChange should be passed correctly
           placeholder="Category"
           required
         />
         <input
           name="rating"
           value={formData.rating}
-          onChange={onChange}
+          onChange={onChange} // onChange should be passed correctly
           placeholder="Rating (0–3)"
           type="number"
           required

@@ -28,20 +28,17 @@ export default function GameLibrary() {
   const validateForm = () => {
     const { minPlayers, maxPlayers, duration, rating } = formData;
 
-    // Validate minPlayers <= maxPlayers
     if (Number(minPlayers) > Number(maxPlayers)) {
       setError("Min Players cannot be greater than Max Players.");
       return false;
     }
 
-    // Validate all inputs are positive numbers and rating is between 0 and 3
     if (minPlayers <= 0 || maxPlayers <= 0 || duration <= 0 || rating < 0 || rating > 3) {
       setError("Please enter valid numbers (greater than 0 for players and duration, 0-3 for rating).");
       return false;
     }
 
-    // Clear any existing error
-    setError("");
+    setError(""); // Clear any existing error
     return true;
   };
 
@@ -71,8 +68,8 @@ export default function GameLibrary() {
         <h2>Add New Game</h2>
         <GameForm
           formData={formData}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
+          onChange={handleChange}  // onChange should be passed here
+          onSubmit={handleSubmit}
           error={error}
         />
       </div>
