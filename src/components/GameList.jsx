@@ -1,15 +1,6 @@
 // src/components/GameList.jsx
 import React, { useState } from "react";
-
-const GameCard = ({ game }) => (
-  <div style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem", borderRadius: "8px" }}>
-    <h3>{game.title}</h3>
-    <p><strong>Players:</strong> {game.minPlayers}–{game.maxPlayers}</p>
-    <p><strong>Duration:</strong> {game.duration} min</p>
-    <p><strong>Category:</strong> {Array.isArray(game.category) ? game.category.join(", ") : game.category}</p>
-    <p><strong>Rating:</strong> {game.rating}/3</p>
-  </div>
-);
+import GameCard from "./GameCard";
 
 export default function GameList({ games = [] }) {
   const [titleFilter, setTitleFilter] = useState("");
