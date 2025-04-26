@@ -2,23 +2,40 @@ import React, { useState } from "react";
 import GameCard from "./GameCard";
 
 export default function GameList({ games = [], setGames }) {
-
-  // For Filtering 
   const [showFilters, setShowFilters] = useState(false);
   const [titleFilter, setTitleFilter] = useState("");
   const [minRatingFilter, setMinRatingFilter] = useState("");
-  const [numPlayersFilter, setNumPlayersFilter] = useState("");
-  const [maxDurationFilter, setMaxDurationFilter] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  console.log("Current games in GameList:", games);
+
+  const allCategories = Array.from(
+    new Set(
+      games.flatMap((game) =>
+        Array.isArray(game.category) ? game.category : [game.category]
+      )
+    )
+  ).filter(Boolean); // remove undefined or empty
 
   const filteredGames = games.filter((game) => {
-    const gameTitle = Array.isArray(game.title)  ? game.title.join(", ") : game.title || "";
-    const matchesTitle = titleFilter === "" || gameTitle.toLowerCase().includes(titleFilter.toLowerCase());
-   
-    const matchesRating = minRatingFilter === "" || game.rating >= Number(minRatingFilter);
-    const matchesNumPlayers = numPlayersFilter === "" || numPlayersFilter=== 0 || ((game.minPlayers <= numPlayersFilter) && (game.maxPlayers >= numPlayersFilter));
-    
-    const matchesDuration = maxDurationFilter === 0 || maxDurationFilter === "" || maxDurationFilter >= game.duration;
-    return matchesTitle && matchesRating && matchesNumPlayers && matchesDuration;
+    const gameTitle = Array.isArray(game.title)
+      ? game.title.join(", ")
+      : game.title || "";
+
+    const matchesTitle =
+      titleFilter === "" ||
+      gameTitle.toLowerCase().includes(titleFilter.toLowerCase());
+
+    const matchesRating =
+      minRatingFilter === "" || Number(game.rating) >= Number(minRatingFilter);
+
+    const matchesCategory =
+      selectedCategory === "" ||
+      (Array.isArray(game.category)
+        ? game.category.includes(selectedCategory)
+        : game.category === selectedCategory);
+
+    return matchesTitle && matchesRating && matchesCategory;
   });
 
   const handleUpdate = (updatedGame) => {
@@ -36,20 +53,22 @@ export default function GameList({ games = [], setGames }) {
   return (
     <div>
       <button
-        onClick={() => setShowFilters((prev) => !prev)}
-        style={{
-          marginBottom: "1rem",
-          padding: "0.5rem 1rem",
-          backgroundColor: "#eee",
-          border: "1px solid #ccc",
-          borderRadius: "6px",
-        }}
+        onClick={() => setShowFilters(!showFilters)}
+        style={{ marginBottom: "1rem" }}
       >
-        {showFilters ? "x" : "≡"}
+        {showFilters ? "Hide Filters" : "Show Filters"}
       </button>
 
       {showFilters && (
-        <div style={{ marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "center" }}>
+        <div
+          style={{
+            marginBottom: "1rem",
+            display: "flex",
+            gap: "1rem",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <label>
             Filter by Title:
             <input
@@ -67,31 +86,25 @@ export default function GameList({ games = [], setGames }) {
               min="0"
               max="3"
               value={minRatingFilter}
-              onChange={(e) => setMinRatingFilter(Number(e.target.value))}
+              onChange={(e) => setMinRatingFilter(e.target.value)}
               style={{ marginLeft: "0.5rem", width: "50px" }}
+              placeholder="0–3"
             />
           </label>
           <label>
-            Num Players:
-            <input
-              type="number"
-              min="1"
-              max="1000000000000"
-              value={numPlayersFilter}
-              onChange={(e) => setNumPlayersFilter(Number(e.target.value))}
-              style={{ marginLeft: "0.5rem", width: "50px" }}
-            />
-          </label>
-          <label>
-            Max Duration:
-            <input
-              type="number"
-              min="1"
-              max="1000000000000"
-              value={maxDurationFilter}
-              onChange={(e) => setMaxDurationFilter(Number(e.target.value))}
-              style={{ marginLeft: "0.5rem", width: "50px" }}
-            />
+            Category:
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              style={{ marginLeft: "0.5rem" }}
+            >
+              <option value="">All</option>
+              {allCategories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
       )}
