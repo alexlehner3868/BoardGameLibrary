@@ -5,6 +5,8 @@ export default function GameList({ games = [], setGames }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [minRatingFilter, setMinRatingFilter] = useState(0);
 
+  console.log("Current games in GameList:", games); // log to check the games passed to GameList
+
   const filteredGames = games.filter((game) => {
     const gameTitle = Array.isArray(game.title)
       ? game.title.join(", ")
@@ -18,10 +20,18 @@ export default function GameList({ games = [], setGames }) {
     return matchesTitle && matchesRating;
   });
 
+  console.log("Filtered games:", filteredGames); // log to check the filtered games
+
   const handleUpdate = (updatedGame) => {
+    console.log("Updating game:", updatedGame); // log the updated game
     setGames((prevGames) =>
       prevGames.map((game) => (game.id === updatedGame.id ? updatedGame : game))
     );
+  };
+
+  const handleDelete = (gameId) => {
+    console.log("Deleting game with id:", gameId); // log the game being deleted
+    setGames((prevGames) => prevGames.filter((game) => game.id !== gameId));
   };
 
   return (
@@ -54,7 +64,12 @@ export default function GameList({ games = [], setGames }) {
         <p>No games match your filters.</p>
       ) : (
         filteredGames.map((game) => (
-          <GameCard key={game.id} game={game} onUpdate={handleUpdate} />
+          <GameCard
+            key={game.id}
+            game={game}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete} // Pass onDelete to GameCard
+          />
         ))
       )}
     </div>

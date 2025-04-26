@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 
-export default function GameCard({ game, onUpdate }) {
+export default function GameCard({ game, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(game.title);
 
-  // Handle saving the edited title
   const handleSave = () => {
-    onUpdate({ ...game, title: editedTitle }); // Only update the game being edited
-    setIsEditing(false); // Close the edit mode
-   
+    console.log("Saving edited game:", { ...game, title: editedTitle }); // log when saving
+    onUpdate({ ...game, title: editedTitle }); // Only update this game
+    setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    console.log("Deleting game:", game.id); // log when deleting
+    onDelete(game.id); // Delete this game by its id
   };
 
   return (
@@ -23,7 +27,7 @@ export default function GameCard({ game, onUpdate }) {
       }}
     >
       <button
-        onClick={isEditing ? handleSave : () => setIsEditing(true)} // Toggle between Edit and Save
+        onClick={isEditing ? handleSave : () => setIsEditing(true)}
         style={{
           position: "absolute",
           top: "10px",
@@ -34,6 +38,25 @@ export default function GameCard({ game, onUpdate }) {
       >
         {isEditing ? "Save" : "Edit"}
       </button>
+
+      {isEditing && (
+        <button
+          onClick={handleDelete}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "70px", // position to the left of the Save button
+            fontSize: "0.8rem",
+            padding: "0.2rem 0.5rem",
+            backgroundColor: "red",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+          }}
+        >
+          Delete
+        </button>
+      )}
 
       {isEditing ? (
         <input
@@ -53,7 +76,8 @@ export default function GameCard({ game, onUpdate }) {
         <strong>Duration:</strong> {game.duration} min
       </p>
       <p>
-        <strong>Category:</strong> {Array.isArray(game.category) ? game.category.join(", ") : game.category}
+        <strong>Category:</strong>{" "}
+        {Array.isArray(game.category) ? game.category.join(", ") : game.category}
       </p>
       <p>
         <strong>Rating:</strong> {"⭐".repeat(Number(game.rating))}
