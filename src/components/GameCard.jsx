@@ -15,6 +15,11 @@ export default function GameCard({ game, onUpdate, onDelete }) {
     onDelete(game.id); // Delete this game by its id
   };
 
+  var ratingString = "⭐".repeat(Number(game.rating));
+  ratingString += "☆".repeat(3-Number(game.rating));
+
+
+ 
   return (
     <div
       style={{
@@ -80,7 +85,7 @@ export default function GameCard({ game, onUpdate, onDelete }) {
         {Array.isArray(game.category) ? game.category.join(", ") : game.category}
       </p>
       <p>
-        <strong>Rating:</strong> {"⭐".repeat(Number(game.rating))}
+        <strong>Rating:</strong> {ratingString}
       </p>
     </div>
   );
