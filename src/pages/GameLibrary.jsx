@@ -1,4 +1,3 @@
-// src/pages/GameLibrary.jsx
 import React, { useState, useEffect } from "react";
 import GameList from "../components/GameList";
 import GameForm from "../components/GameForm";
@@ -7,7 +6,8 @@ import "./GameLibrary.css";
 export default function GameLibrary() {
   const [games, setGames] = useState(() => {
     const savedGames = localStorage.getItem("boardGames");
-    return savedGames ? JSON.parse(savedGames) : [];
+    const parsedGames = savedGames ? JSON.parse(savedGames) : [];
+    return parsedGames;
   });
 
   const [formData, setFormData] = useState({
@@ -51,9 +51,19 @@ export default function GameLibrary() {
     e.preventDefault();
 
     if (validateForm()) {
-      const newGame = { ...formData };
+      const newGame = {
+        ...formData,
+        id: crypto.randomUUID(), // generate unique id
+      };
       setGames([...games, newGame]);
-      setFormData({ title: "", minPlayers: "", maxPlayers: "", duration: "", category: "", rating: "" });
+      setFormData({
+        title: "",
+        minPlayers: "",
+        maxPlayers: "",
+        duration: "",
+        category: "",
+        rating: "",
+      });
     }
   };
 
@@ -61,14 +71,14 @@ export default function GameLibrary() {
     <div className="game-library-container">
       <div className="game-list">
         <h2>Game Library</h2>
-        <GameList games={games} />
+        <GameList games={games} setGames={setGames} />
       </div>
 
       <div className="game-form">
         <h2>Add New Game</h2>
         <GameForm
           formData={formData}
-          onChange={handleChange}  // onChange should be passed here
+          onChange={handleChange} // onChange should be passed here
           onSubmit={handleSubmit}
           error={error}
         />

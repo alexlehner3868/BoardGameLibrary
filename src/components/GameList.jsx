@@ -1,15 +1,14 @@
-// src/components/GameList.jsx
 import React, { useState } from "react";
 import GameCard from "./GameCard";
 
-export default function GameList({ games = [] }) {
+export default function GameList({ games = [], setGames }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [minRatingFilter, setMinRatingFilter] = useState(0);
 
   const filteredGames = games.filter((game) => {
     const gameTitle = Array.isArray(game.title)
       ? game.title.join(", ")
-      : (game.title || "");
+      : game.title || "";
 
     const matchesTitle =
       titleFilter === "" ||
@@ -18,6 +17,12 @@ export default function GameList({ games = [] }) {
     const matchesRating = game.rating >= minRatingFilter;
     return matchesTitle && matchesRating;
   });
+
+  const handleUpdate = (updatedGame) => {
+    setGames((prevGames) =>
+      prevGames.map((game) => (game.id === updatedGame.id ? updatedGame : game))
+    );
+  };
 
   return (
     <div>
@@ -48,7 +53,9 @@ export default function GameList({ games = [] }) {
       {filteredGames.length === 0 ? (
         <p>No games match your filters.</p>
       ) : (
-        filteredGames.map((game, index) => <GameCard key={index} game={game} />)
+        filteredGames.map((game) => (
+          <GameCard key={game.id} game={game} onUpdate={handleUpdate} />
+        ))
       )}
     </div>
   );
