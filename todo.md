@@ -1,5 +1,4 @@
 Todo list
-3. Category drop down in form & filter category based on set list of categories
 4. Register Plays 
 5. Multi person ratings 
 6. Game Suggestions (random, given constraints --> random, most recently played, least recently played, highet rated)

@@ -19,6 +19,7 @@ export default function GameLibrary() {
     rating: "",
   });
 
+  const categoryList = ["Party", "Strategy", "Card", "Children", "Push Your Luck", "Dexterity", "Engine Builder", "Dice"];
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -71,7 +72,7 @@ export default function GameLibrary() {
     <div className="game-library-container">
       <div className="game-list">
         <h2>Game Library</h2>
-        <GameList games={games} setGames={setGames} />
+        <GameList games={games} setGames={setGames} categoryList={categoryList}/>
       </div>
 
       <div className="game-form">
@@ -81,6 +82,7 @@ export default function GameLibrary() {
           onChange={handleChange} // onChange should be passed here
           onSubmit={handleSubmit}
           error={error}
+          categoryList={categoryList}
         />
       </div>
     </div>

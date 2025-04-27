@@ -1,21 +1,13 @@
 import React, { useState } from "react";
 import GameCard from "./GameCard";
 
-export default function GameList({ games = [], setGames }) {
+export default function GameList({ games = [], setGames , categoryList}) {
   const [showFilters, setShowFilters] = useState(false);
   const [titleFilter, setTitleFilter] = useState("");
   const [minRatingFilter, setMinRatingFilter] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
   console.log("Current games in GameList:", games);
-
-  const allCategories = Array.from(
-    new Set(
-      games.flatMap((game) =>
-        Array.isArray(game.category) ? game.category : [game.category]
-      )
-    )
-  ).filter(Boolean); // remove undefined or empty
 
   const filteredGames = games.filter((game) => {
     const gameTitle = Array.isArray(game.title)
@@ -99,7 +91,7 @@ export default function GameList({ games = [], setGames }) {
               style={{ marginLeft: "0.5rem" }}
             >
               <option value="">All</option>
-              {allCategories.map((cat) => (
+              {categoryList.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat}
                 </option>

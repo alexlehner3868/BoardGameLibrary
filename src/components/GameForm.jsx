@@ -1,7 +1,7 @@
 // src/components/GameForm.jsx
 import React from "react";
 
-export default function GameForm({ formData, onChange, onSubmit, error }) {
+export default function GameForm({ formData, onChange, onSubmit, error , categoryList}) {
   return (
     <div>
       <form
@@ -39,13 +39,20 @@ export default function GameForm({ formData, onChange, onSubmit, error }) {
           type="number"
           required
         />
-        <input
-          name="category"
-          value={formData.category}
-          onChange={onChange} // onChange should be passed correctly
-          placeholder="Category"
-          required
-        />
+        
+        <select
+        name="category" // <<< ADD THIS LINE
+        value={formData.category}
+        onChange={onChange}
+        style={{ marginLeft: "0.5rem" }}
+      >
+        <option value="">All</option>
+        {categoryList.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
         <input
           name="rating"
           value={formData.rating}
