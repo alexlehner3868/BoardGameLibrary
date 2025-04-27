@@ -21,6 +21,7 @@ export default function GameLibrary() {
 
   const categoryList = ["Party", "Strategy", "Card", "Children", "Push Your Luck", "Dexterity", "Engine Builder", "Dice"];
   const [error, setError] = useState("");
+  const [showForm, setShowForm] = useState(false); // State to toggle form visibility
 
   useEffect(() => {
     localStorage.setItem("boardGames", JSON.stringify(games));
@@ -68,22 +69,33 @@ export default function GameLibrary() {
     }
   };
 
+  const toggleForm = () => {
+    setShowForm((prev) => !prev); // Toggle form visibility
+  };
+
   return (
     <div className="game-library-container">
       <div className="game-list">
         <h2>Game Library</h2>
-        <GameList games={games} setGames={setGames} categoryList={categoryList}/>
+        <GameList games={games} setGames={setGames} categoryList={categoryList} />
       </div>
 
       <div className="game-form">
-        <h2>Add New Game</h2>
-        <GameForm
-          formData={formData}
-          onChange={handleChange} // onChange should be passed here
-          onSubmit={handleSubmit}
-          error={error}
-          categoryList={categoryList}
-        />
+        <button onClick={toggleForm} className="add-game-btn">
+          {showForm ? "Hide Add Game Form" : "Add Game"}
+        </button>
+        {showForm && (
+          <>
+            <h2>Add New Game</h2>
+            <GameForm
+              formData={formData}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+              error={error}
+              categoryList={categoryList}
+            />
+          </>
+        )}
       </div>
     </div>
   );

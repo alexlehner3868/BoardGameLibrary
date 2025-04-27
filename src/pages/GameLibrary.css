@@ -19,3 +19,17 @@
     height: 80vh; /* Same height as the game list */
   }
   
+  .add-game-btn {
+    padding: 10px 20px;
+    background-color: #eaa937;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .add-game-btn:hover {
+    background-color: #eaa937;
+  }
+  
