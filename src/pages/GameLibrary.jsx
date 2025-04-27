@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import GameList from "../components/GameList";
 import GameForm from "../components/GameForm";
+import LogPlayForm from "../components/LogPlayForm";
 import "./GameLibrary.css";
 
 export default function GameLibrary() {
@@ -19,9 +20,17 @@ export default function GameLibrary() {
     rating: "",
   });
 
+  const [playLog, setPlayLog] = useState({
+    selectedGameId: "",
+    playDate: "",
+    newRating: "",
+  });
+
   const categoryList = ["Party", "Strategy", "Card", "Children", "Push Your Luck", "Dexterity", "Engine Builder", "Dice"];
   const [error, setError] = useState("");
-  const [showForm, setShowForm] = useState(false); // State to toggle form visibility
+  
+  const [showAddGameForm, setShowAddGameForm] = useState(false); // Toggle for Add Game Form
+  const [showLogGameForm, setShowLogGameForm] = useState(false); // Toggle for Log Play Form
 
   useEffect(() => {
     localStorage.setItem("boardGames", JSON.stringify(games));
@@ -69,8 +78,24 @@ export default function GameLibrary() {
     }
   };
 
-  const toggleForm = () => {
-    setShowForm((prev) => !prev); // Toggle form visibility
+  const toggleAddGameForm = () => {
+    // If Add Game form is already shown, hide it, otherwise show it and hide Log Play form
+    if (showAddGameForm) {
+      setShowAddGameForm(false);
+    } else {
+      setShowAddGameForm(true);
+      setShowLogGameForm(false); // Ensure Log Play form is hidden
+    }
+  };
+
+  const toggleLogGameForm = () => {
+    // If Log Play form is already shown, hide it, otherwise show it and hide Add Game form
+    if (showLogGameForm) {
+      setShowLogGameForm(false);
+    } else {
+      setShowLogGameForm(true);
+      setShowAddGameForm(false); // Ensure Add Game form is hidden
+    }
   };
 
   return (
@@ -81,10 +106,14 @@ export default function GameLibrary() {
       </div>
 
       <div className="game-form">
-        <button onClick={toggleForm} className="add-game-btn">
-          {showForm ? "Hide Add Game Form" : "Add Game"}
+        <button onClick={toggleAddGameForm} className="add-game-btn">
+          {showAddGameForm ? "Hide Add Game Form" : "Add Game"}
         </button>
-        {showForm && (
+        <button onClick={toggleLogGameForm} className="log-play-btn">
+          {showLogGameForm ? "Hide Log Play Form" : "Log Played"}
+        </button>
+
+        {showAddGameForm && (
           <>
             <h2>Add New Game</h2>
             <GameForm
@@ -94,6 +123,13 @@ export default function GameLibrary() {
               error={error}
               categoryList={categoryList}
             />
+          </>
+        )}
+
+        {showLogGameForm && (
+          <>
+            <h2>Log Game Play</h2>
+            <LogPlayForm games={games} setGames={setGames} />
           </>
         )}
       </div>
