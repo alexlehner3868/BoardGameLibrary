@@ -1,5 +1,4 @@
 Todo list
-4. Register Plays 
 5. Multi person ratings 
 6. Game Suggestions (random, given constraints --> random, most recently played, least recently played, highet rated)
 7. Add date of last play to game card

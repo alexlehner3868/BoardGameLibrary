@@ -63,25 +63,10 @@ export default function GameCard({ game, onUpdate, onDelete }) {
     : "N/A";
 
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        padding: "1rem",
-        marginBottom: "1rem",
-        borderRadius: "8px",
-        backgroundColor: isEditing ? "#f0f0f0" : "white",
-        position: "relative",
-      }}
-    >
+    <div className="game-card">
       <button
         onClick={isEditing ? handleSave : () => setIsEditing(true)}
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          fontSize: "0.8rem",
-          padding: "0.2rem 0.5rem",
-        }}
+        className="edit-button"
       >
         {isEditing ? "Save" : "Edit"}
       </button>
@@ -89,17 +74,7 @@ export default function GameCard({ game, onUpdate, onDelete }) {
       {isEditing && (
         <button
           onClick={handleDelete}
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "70px",
-            fontSize: "0.8rem",
-            padding: "0.2rem 0.5rem",
-            backgroundColor: "red",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-          }}
+          className="delete-button"
         >
           Delete
         </button>
@@ -112,17 +87,16 @@ export default function GameCard({ game, onUpdate, onDelete }) {
             value={editedTitle}
             onChange={(e) => setEditedTitle(e.target.value)}
             placeholder="Title"
-            style={{ fontSize: "1.2rem", marginBottom: "0.5rem", width: "100%" }}
+            className="input-field"
           />
 
-          <p>
-            <strong>Players:</strong>{" "}
+          <div className="section">
+            <strong>Players:</strong>
             <input
               type="number"
               value={editedMinPlayers}
               onChange={(e) => setEditedMinPlayers(e.target.value)}
               placeholder="Min"
-              style={{ width: "60px", marginRight: "0.5rem" }}
             />
             –
             <input
@@ -130,35 +104,32 @@ export default function GameCard({ game, onUpdate, onDelete }) {
               value={editedMaxPlayers}
               onChange={(e) => setEditedMaxPlayers(e.target.value)}
               placeholder="Max"
-              style={{ width: "60px", marginLeft: "0.5rem" }}
             />
-          </p>
+          </div>
 
-          <p>
-            <strong>Duration:</strong>{" "}
+          <div className="section">
+            <strong>Duration:</strong>
             <input
               type="number"
               value={editedDuration}
               onChange={(e) => setEditedDuration(e.target.value)}
               placeholder="Duration"
-              style={{ width: "80px" }}
-            />{" "}
+            />
             min
-          </p>
+          </div>
 
-          <p>
-            <strong>Category:</strong>{" "}
+          <div className="section category-rating-separator">
+            <strong>Category:</strong>
             <input
               type="text"
               value={editedCategory}
               onChange={(e) => setEditedCategory(e.target.value)}
               placeholder="Category"
-              style={{ width: "60%" }}
             />
-          </p>
+          </div>
 
-          <p>
-            <strong>Rating:</strong>{" "}
+          <div className="section">
+            <strong>Rating:</strong>
             <input
               type="number"
               value={editedRating}
@@ -166,30 +137,40 @@ export default function GameCard({ game, onUpdate, onDelete }) {
               max="3"
               step="0.5"
               onChange={(e) => setEditedRating(e.target.value)}
-              style={{ width: "60px" }}
             />
-          </p>
+          </div>
 
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p className="error">{error}</p>}
         </>
       ) : (
         <>
           <h3>{game.title}</h3>
-          <p>
+
+          <div className="section">
             <strong>Players:</strong> {game.minPlayers} – {game.maxPlayers}
-          </p>
-          <p>
+          </div>
+
+          <div className="section">
             <strong>Duration:</strong> {game.duration} min
-          </p>
-          <p>
+          </div>
+
+          <div className="section">
             <strong>Category:</strong>{" "}
             {Array.isArray(game.category) ? game.category.join(", ") : game.category}
-          </p>
-          <p>
+          </div>
+
+          {/* Dotted line only between Category and Rating */}
+          <div className="section category-rating-separator">
             <strong>Rating:</strong> {ratingDisplay}
-          </p>
-          <p>Num Plays: {game.totalPlays}</p>
-          <p>Last Played: {lastPlayedDate}</p>
+          </div>
+
+          <div className="section">
+            <strong>Num Plays:</strong> {game.totalPlays}
+          </div>
+
+          <div className="section">
+            <strong>Last Played:</strong> {lastPlayedDate}
+          </div>
         </>
       )}
     </div>

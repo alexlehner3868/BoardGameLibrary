@@ -1,59 +1,75 @@
 .game-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .game-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: white;
+    position: relative;
   }
   
   .game-card h3 {
-    margin: 0;
-    font-size: 1.8rem;
-    color: #333;
-    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
   
   .game-card p {
-    margin: 8px 0;
+    margin: 0.5rem 0;
     font-size: 1rem;
-    color: #666;
   }
   
-  .game-card .total-plays {
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: #4CAF50; /* Green for total plays */
+  .game-card .section {
+    margin-bottom: 0.5rem;
   }
   
-  .game-card .last-played {
-    font-style: italic;
-    color: #888;
+  /* Apply a horizontal dotted line between Category and Rating */
+  .game-card .category-rating-separator {
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
   }
   
-  .game-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-    justify-content: flex-end;
+  /* Edit button and delete button styles */
+  .game-card button {
+    position: absolute;
+    top: 10px;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
   }
   
-  .game-actions button {
-    padding: 8px 16px;
-    border: none;
-    background-color: #007BFF;
+  .game-card .edit-button {
+    right: 10px;
+  }
+  
+  .game-card .delete-button {
+    right: 70px;
+    background-color: red;
     color: white;
-    font-weight: bold;
+    border: none;
     border-radius: 5px;
-    cursor: pointer;
   }
   
-  .game-actions button:hover {
-    background-color: #0056b3;
+  .game-card input {
+    font-size: 1rem;
+    padding: 0.2rem;
+    width: 100%;
+  }
+  
+  .game-card input[type="number"] {
+    width: 60px;
+  }
+  
+  .game-card .error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  
+  .game-card .rating {
+    display: inline-block;
+    font-size: 1.2rem;
+  }
+  
+  .game-card .rating span {
+    margin-right: 5px;
   }
   
