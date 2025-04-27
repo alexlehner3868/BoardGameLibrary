@@ -12,7 +12,6 @@ export default function LogPlayForm({ games, setGames }) {
     setPlayLog((prev) => ({ ...prev, [name]: value }));
   };
 
-
   const handleLogPlaySubmit = (e) => {
     e.preventDefault();
     if (!playLog.selectedGameId || !playLog.playDate) {
@@ -20,15 +19,18 @@ export default function LogPlayForm({ games, setGames }) {
       return;
     }
 
-    if (playLog.newRating !== "") {
-      setGames((prevGames) =>
-        prevGames.map((game) =>
-          game.id === playLog.selectedGameId
-            ? { ...game, rating: playLog.newRating }
-            : game
-        )
-      );
-    }
+    setGames((prevGames) =>
+      prevGames.map((game) =>
+        game.id === playLog.selectedGameId
+          ? {
+              ...game,
+              totalPlays: game.totalPlays + 1, // Increment play count
+              lastPlayedDate: playLog.playDate, // Update the most recent play date
+              rating: playLog.newRating !== "" ? playLog.newRating : game.rating, // Update rating if provided
+            }
+          : game
+      )
+    );
 
     alert("Game play logged!");
     setPlayLog({ selectedGameId: "", playDate: "", newRating: "" });

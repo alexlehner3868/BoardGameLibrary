@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GameCard from "./GameCard";
+import "./GameCard.css";
 
 export default function GameList({ games = [], setGames , categoryList}) {
   const [showFilters, setShowFilters] = useState(false);

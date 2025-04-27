@@ -8,7 +8,10 @@ export default function GameLibrary() {
   const [games, setGames] = useState(() => {
     const savedGames = localStorage.getItem("boardGames");
     const parsedGames = savedGames ? JSON.parse(savedGames) : [];
-    return parsedGames;
+    return parsedGames.map((game) => ({
+      ...game,
+      totalPlays: game.totalPlays || 0,  // Set default value of 0 for totalPlays
+    }));
   });
 
   const [formData, setFormData] = useState({
@@ -20,17 +23,11 @@ export default function GameLibrary() {
     rating: "",
   });
 
-  const [playLog, setPlayLog] = useState({
-    selectedGameId: "",
-    playDate: "",
-    newRating: "",
-  });
-
   const categoryList = ["Party", "Strategy", "Card", "Children", "Push Your Luck", "Dexterity", "Engine Builder", "Dice"];
   const [error, setError] = useState("");
   
-  const [showAddGameForm, setShowAddGameForm] = useState(false); // Toggle for Add Game Form
-  const [showLogGameForm, setShowLogGameForm] = useState(false); // Toggle for Log Play Form
+  const [showAddGameForm, setShowAddGameForm] = useState(false);
+  const [showLogGameForm, setShowLogGameForm] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("boardGames", JSON.stringify(games));
@@ -49,7 +46,7 @@ export default function GameLibrary() {
       return false;
     }
 
-    setError(""); // Clear any existing error
+    setError(""); 
     return true;
   };
 
@@ -64,7 +61,9 @@ export default function GameLibrary() {
     if (validateForm()) {
       const newGame = {
         ...formData,
-        id: crypto.randomUUID(), // generate unique id
+        id: crypto.randomUUID(),
+        totalPlays: 0, // Initialize play count
+        lastPlayedDate: "", // Initialize last played date
       };
       setGames([...games, newGame]);
       setFormData({
@@ -79,22 +78,20 @@ export default function GameLibrary() {
   };
 
   const toggleAddGameForm = () => {
-    // If Add Game form is already shown, hide it, otherwise show it and hide Log Play form
     if (showAddGameForm) {
       setShowAddGameForm(false);
     } else {
       setShowAddGameForm(true);
-      setShowLogGameForm(false); // Ensure Log Play form is hidden
+      setShowLogGameForm(false);
     }
   };
 
   const toggleLogGameForm = () => {
-    // If Log Play form is already shown, hide it, otherwise show it and hide Add Game form
     if (showLogGameForm) {
       setShowLogGameForm(false);
     } else {
       setShowLogGameForm(true);
-      setShowAddGameForm(false); // Ensure Add Game form is hidden
+      setShowAddGameForm(false);
     }
   };
 

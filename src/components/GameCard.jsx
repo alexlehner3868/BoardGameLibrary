@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./GameCard.css";
 
 export default function GameCard({ game, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -55,6 +56,11 @@ export default function GameCard({ game, onUpdate, onDelete }) {
 
   const ratingDisplay =
     "⭐".repeat(Number(game.rating)) + "☆".repeat(3 - Number(game.rating));
+
+  // Format the last played date if it exists
+  const lastPlayedDate = game.lastPlayedDate
+    ? new Date(game.lastPlayedDate).toLocaleDateString()
+    : "N/A";
 
   return (
     <div
@@ -182,6 +188,8 @@ export default function GameCard({ game, onUpdate, onDelete }) {
           <p>
             <strong>Rating:</strong> {ratingDisplay}
           </p>
+          <p>Num Plays: {game.totalPlays}</p>
+          <p>Last Played: {lastPlayedDate}</p>
         </>
       )}
     </div>
