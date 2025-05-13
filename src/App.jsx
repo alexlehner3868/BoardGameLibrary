@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import GameLibrary from './pages/GameLibrary';
 import Wishlist from './pages/Wishlist';
 import Stats from './pages/Stats';
-
+import GameSuggestion from './pages/GameSuggestion';
 const App = () => {
   return (
     <div>
@@ -13,6 +13,7 @@ const App = () => {
           <Route path="/" element={<GameLibrary />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/Game Suggestion" element ={<GameSuggestion/>} />
         </Routes>
       </div>
     </div>
