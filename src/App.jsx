@@ -26,7 +26,7 @@ const App = () => {
           <Route path="/" element={<GameLibrary games={games} setGames={setGames} categoryList={categoryList}/>} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/stats" element={<Stats />} />
-          <Route path="/Game Suggestion" element ={<GameSuggestion/>} />
+          <Route path="/Game Suggestion" element ={<GameSuggestion allGames={games} categoryList={categoryList}/>} />
         </Routes>
       </div>
     </div>
