@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import GameCard from "./GameCard";
 import "./GameCard.css";
+import { IoEllipseSharp } from "react-icons/io5";
 
 export default function GameList({ games = [], setGames , categoryList}) {
+  
+  const numPlaysList = ["Unplayed", "Played"];
+  
   const [showFilters, setShowFilters] = useState(false);
   const [titleFilter, setTitleFilter] = useState("");
   const [minRatingFilter, setMinRatingFilter] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [numPlayersFilter, setNumPlayersFilter] = useState("");
   const [maxDurationFilter, setMaxDurationFilter] = useState("");
+  const [numPlaysFilter, setNumPlaysFilter] = useState("");
 
   const filteredGames = games.filter((game) => {
     const gameTitle = Array.isArray(game.title)  ? game.title.join(", ") : game.title || "";
@@ -18,7 +23,18 @@ export default function GameList({ games = [], setGames , categoryList}) {
     const matchesNumPlayers = numPlayersFilter === "" || numPlayersFilter=== 0 || ((game.minPlayers <= numPlayersFilter) && (game.maxPlayers >= numPlayersFilter));
     const matchesCategory =  selectedCategory === "" || (Array.isArray(game.category) ? game.category.includes(selectedCategory)  : game.category === selectedCategory);
     const matchesDuration = maxDurationFilter === 0 || maxDurationFilter === "" || maxDurationFilter >= game.duration;
-    return matchesTitle && matchesRating && matchesNumPlayers && matchesDuration && matchesCategory;
+
+    var matchesNumPlays;
+
+    if(numPlaysFilter == "All" || numPlaysFilter == "") {
+      matchesNumPlays = true;
+    }else if((numPlaysFilter == "Unplayed" && game.totalPlays == 0) ||(numPlaysFilter == "Played" && game.totalPlays > 0)){
+      matchesNumPlays = true;
+    }else{
+      matchesNumPlays = false;
+    }
+
+    return matchesTitle && matchesRating && matchesNumPlayers && matchesDuration && matchesCategory && matchesNumPlays;
     
   });
 
@@ -105,6 +121,21 @@ export default function GameList({ games = [], setGames , categoryList}) {
                {categoryList.map((cat) => (
                  <option key={cat} value={cat}>
                    {cat}
+                 </option>
+               ))}
+           </select>
+           </label>
+           <label>
+            Plays:
+            <select
+               value={numPlaysFilter}
+               onChange={(e) => setNumPlaysFilter(e.target.value)}
+               style={{ marginLeft: "0.5rem" }}
+             >
+               <option value="">All</option>
+               {numPlaysList.map((np) => (
+                 <option key={np} value={np}>
+                   {np}
                  </option>
                ))}
            </select>
