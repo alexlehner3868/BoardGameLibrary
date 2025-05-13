@@ -4,16 +4,8 @@ import GameForm from "../components/GameForm";
 import LogPlayForm from "../components/LogPlayForm";
 import "./GameLibrary.css";
 
-export default function GameLibrary() {
-  const [games, setGames] = useState(() => {
-    const savedGames = localStorage.getItem("boardGames");
-    const parsedGames = savedGames ? JSON.parse(savedGames) : [];
-    return parsedGames.map((game) => ({
-      ...game,
-      totalPlays: game.totalPlays || 0,  // Set default value of 0 for totalPlays
-    }));
-  });
-
+export default function GameLibrary({games, setGames, categoryList}) {
+  
   const [formData, setFormData] = useState({
     title: "",
     minPlayers: "",
@@ -23,7 +15,7 @@ export default function GameLibrary() {
     rating: "",
   });
 
-  const categoryList = ["Party", "Strategy", "Card", "Children", "Push Your Luck", "Dexterity", "Engine Builder", "Dice"];
+  
   const [error, setError] = useState("");
   
   const [showAddGameForm, setShowAddGameForm] = useState(false);
